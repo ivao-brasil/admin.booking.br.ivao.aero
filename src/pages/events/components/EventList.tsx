@@ -60,7 +60,7 @@ export const EventList: FunctionComponent<EventListProps> = ({ onEdit }) => {
         {!eventsLoading &&
           events.map(event => (
             <Grid item xs={4} key={event.id}>
-              <EventCard event={event} onEdit={onEdit} onDelete={onDelete} slotRedirection={event => navigate(`/admin/events/${event.id}/slots`)} />
+              <EventCard event={event} onEdit={onEdit} onDelete={onDelete} slotRedirection={event => navigate(`/events/${event.id}/slots`)} />
             </Grid>
           ))}
       </Grid>
