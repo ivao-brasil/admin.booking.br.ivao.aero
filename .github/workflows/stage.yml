@@ -15,6 +15,18 @@ jobs:
       with:
         node-version: '14.x'
         
+    - name: Make envfile
+      uses: SpicyPizza/create-envfile@v1.3
+      with:
+        envkey_REACT_APP_DEV: true
+        envkey_REACT_APP_API_HOST: ${{ secrets.STAGE_API_HOST }}
+        envkey_REACT_APP_LOGO_URL: "https://assets.br.ivao.aero/logos/tag_white.png"
+        envkey_WDS_SOCKET_PATH: "/admin/sockjs-node"
+        directory: /
+        file_name: .env
+        fail_on_empty: false
+        
+
     - name: Build Project
       run: |
         npm i --save date-fns@next @date-io/date-fns
