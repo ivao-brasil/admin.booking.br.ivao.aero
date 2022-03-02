@@ -6,7 +6,7 @@ jobs:
     if: github.ref == 'refs/heads/stage'
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@stage
+    - uses: actions/checkout@master
       with:
         fetch-depth: 2
 
