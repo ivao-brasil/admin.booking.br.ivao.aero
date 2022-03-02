@@ -19,7 +19,7 @@ jobs:
       run: |
         npm i --save date-fns@next @date-io/date-fns
         yarn install
-        yarn build
+        CI=false yarn build
         
     - name: List output files
       run: find build/ -print
