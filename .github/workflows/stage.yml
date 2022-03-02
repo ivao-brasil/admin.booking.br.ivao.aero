@@ -17,8 +17,7 @@ jobs:
         
     - name: Build Project
       run: |
-        yarn install
-        yarn build
+        react-scripts build
         
     - name: List output files
       run: find build/ -print
