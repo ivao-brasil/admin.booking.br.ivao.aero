@@ -6,11 +6,11 @@ export const RedirectToLogin = () => {
   const [urlParams] = useSearchParams();
   const IVAOTOKEN = urlParams.get("IVAOTOKEN");
 
-  const { signIn, signed, user } = useContext(AuthContext);
+  const { signIn, user } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (signed) {
+    if (user) {
       window.location.href = '/';
     }
 
