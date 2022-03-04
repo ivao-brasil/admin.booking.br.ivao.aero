@@ -1,17 +1,26 @@
 import { useContext, useEffect } from 'react';
-import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useNavigate, useSearchParams } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
 export const RedirectToLogin = () => {
-  const IVAOTOKEN = new URLSearchParams(window.location.search).get('IVAOTOKEN');
+  const [urlParams] = useSearchParams();
+  const IVAOTOKEN = urlParams.get("IVAOTOKEN");
 
-  const { signIn } = useContext(AuthContext);
-  const { user } = useContext(AuthContext);
+  const { signIn, signed, user } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user) {
+    if (signed) {
       window.location.href = '/';
+    }
+
+    const redirect = urlParams.get("redirect");
+    if (redirect && redirect.indexOf("IVAOTOKEN") !== -1) {
+        /*
+            Se o servidor estiver rodando em localhost:3000, o site de login da IVAO irá redirecionar com uma query inválida
+            Ex: new URLSearchParams(window.location.search).get("redirect") = /?IVAOTOKEN=error
+        */
+        throw new Error(`The IVAO Login service rejected the request. The server is in ivao.aero domain? Token query: ${redirect}`);
     }
 
     if (!IVAOTOKEN) {
@@ -21,14 +30,10 @@ export const RedirectToLogin = () => {
       return;
     }
 
-    const redirect = new URLSearchParams(window.location.search).get('redirect');
-
     signIn(IVAOTOKEN).then(() => {
-      setTimeout(() => {
-        navigate(redirect || '');
-      }, 2000);
+      navigate(redirect || '');
     });
-  }, [IVAOTOKEN, signIn, navigate, user]);
+  }, [IVAOTOKEN, signIn, navigate, user, urlParams]);
 
   return <>Loading...</>;
 };
@@ -37,7 +42,7 @@ export const PublicRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="*" element={<RedirectToLogin />} />
+        <Route path="/" element={<RedirectToLogin />} />
       </Routes>
     </BrowserRouter>
   );
