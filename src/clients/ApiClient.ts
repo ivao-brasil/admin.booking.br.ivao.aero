@@ -1,6 +1,7 @@
 import Axios, { AxiosInstance } from 'axios';
 import { Event, EventType } from '../types/Event';
 import { Pagination } from '../types/Pagination';
+import { Scenery } from '../types/Scenery';
 import { Slot } from '../types/Slot';
 import { User } from '../types/User';
 
@@ -89,7 +90,7 @@ export class ApiClient {
   async getEvents(token: string, data: PaginateRequest = {}) {
     const queryString = fromObjectToQueryString(data);
     return this.axios
-      .get<Pagination<Event>>(`/event${queryString}`, {
+      .get<Pagination<Event>>(`/event?${queryString}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then(response => response.data);
@@ -147,6 +148,39 @@ export class ApiClient {
   createManySlots(eventId: number, token: string, data: FormData) {
     return this.axios
       .post(`/event/${eventId}/slot/many`, data, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then(response => response.data);
+  }
+
+  async getScenaries(token: string, data: PaginateRequest = {}) {
+    const queryString = fromObjectToQueryString(data);
+    return this.axios
+      .get<Pagination<Scenery>>(`/scenery?${queryString}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then(response => response.data);
+  }
+
+  createScenery(data: Partial<Scenery>, token: string) {
+    return this.axios
+      .post(`/scenery`, data, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then(response => response.data);
+  }
+
+  updateScenery(id: number, data: Partial<Scenery>, token: string) {
+    return this.axios
+      .put(`/scenery/${id}`, data, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then(response => response.data);
+  }
+
+  deleteScenery(id: number, token: string) {
+    return this.axios
+      .delete(`/scenery/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then(response => response.data);

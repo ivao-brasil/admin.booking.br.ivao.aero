@@ -4,6 +4,7 @@ import { HomePage } from '../pages/home/HomePage';
 import { UsersPage } from '../pages/users/UsersPage';
 import { SlotsPage } from '../pages/slots/SlotsPage';
 import { Logout } from '../pages/Logout';
+import { SceneriesPage } from '../pages/sceneries/SceneriesPage';
 
 export const PrivateRoutes = () => {
   return (
@@ -13,6 +14,7 @@ export const PrivateRoutes = () => {
         <Route path="/users" element={<UsersPage />} />
         <Route path="/events" element={<EventsPage />} />
         <Route path="/events/:eventId/slots" element={<SlotsPage />} />
+        <Route path="/sceneries" element={<SceneriesPage />} />
         <Route path="/logout" element={<Logout />} />
       </Routes>
     </BrowserRouter>
