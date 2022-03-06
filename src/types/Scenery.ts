@@ -1,3 +1,6 @@
+export type ScenarySimulators = "fs9" | "fsx" | "p3d" | "xp11" | "msfs";
+export type ScenaryLicences = "freeware" | "payware";
+
 export interface Scenery {
   id: number;
   title: string;
