@@ -8,10 +8,17 @@ export const useEvents = (page = 1, perPage = 5) => {
   const { apiClient } = useContext(IocContext);
   const { token } = useContext(AuthContext);
 
-  const { data, isLoading } = useQuery('events', () => apiClient.getEvents(token), {
-    staleTime: ONE_DAY,
-    enabled: Boolean(token),
-  });
+  const { data, isLoading } = useQuery(
+    [
+      'events', { page, perPage }
+    ],
+    () => apiClient.getEvents(token, { page, perPage }),
+    {
+      staleTime: ONE_DAY,
+      enabled: Boolean(token),
+      keepPreviousData: true
+    }
+  );
 
   return {
     events: data ? data.data : [],

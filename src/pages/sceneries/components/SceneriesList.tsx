@@ -1,17 +1,14 @@
-import { Button, Grid, Tooltip } from '@material-ui/core';
-import { Delete, Edit, RemoveCircle, SupervisorAccount } from '@material-ui/icons';
+import { Button, Grid } from '@material-ui/core';
+import { Delete, Edit } from '@material-ui/icons';
+import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { FunctionComponent, useContext, useState } from 'react';
+import { useMutation, useQueryClient } from 'react-query';
+import { Confirm } from '../../../components/Confirm';
 import { AuthContext } from '../../../context/AuthContext';
 import { IocContext } from '../../../context/IocContext';
 import { NotificationContext, NotificationType } from '../../../context/NotificationContext';
-import { User } from '../../../types/User';
-import { useMutation, useQueryClient } from 'react-query';
-import { useUsers } from '../../../hooks/useUsers';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { ConfirmUserBlock } from '../../../components/ConfirmUserBlock';
-import { Scenery } from '../../../types/Scenery';
 import { useScenaries } from '../../../hooks/useScenaries';
-import { Confirm } from '../../../components/Confirm';
+import { Scenery } from '../../../types/Scenery';
 
 interface SceneriesListProp {
   onEdit: (scenery: Scenery) => void;
@@ -75,7 +72,14 @@ export const SceneriesList: FunctionComponent<SceneriesListProp> = ({ onEdit }) 
       headerName: 'Link',
       filterable: true,
       editable: false,
-      flex: 1
+      flex: 1,
+      renderCell: (data: GridRenderCellParams<string>) => {
+        return (
+          <a href={data.value} target="_blank" rel="noreferrer">
+            {data.value}
+          </a>
+        );
+      }
     },
     {
       field: 'simulator',
