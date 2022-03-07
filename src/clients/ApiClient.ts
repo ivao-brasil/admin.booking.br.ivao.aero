@@ -90,7 +90,7 @@ export class ApiClient {
   async getEvents(token: string, data: PaginateRequest = {}) {
     const queryString = fromObjectToQueryString(data);
     return this.axios
-      .get<Pagination<Event>>(`/event?${queryString}`, {
+      .get<Pagination<Event>>(`/event?${queryString}&showAll=true`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then(response => response.data);
