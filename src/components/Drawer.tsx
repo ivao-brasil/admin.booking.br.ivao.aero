@@ -59,7 +59,7 @@ export const Drawer: FunctionComponent<DrawerProps> = ({ open, handleClose }) =>
           <ListItemIcon>
             <Flight />
           </ListItemIcon>
-          <ListItemText primary="Scenaries" />
+          <ListItemText primary="Sceneries" />
         </ListItemButton>
 
         <ListItemButton component={Link} to="/logout">
