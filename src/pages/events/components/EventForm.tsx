@@ -153,7 +153,7 @@ export const EventForm: FunctionComponent<IEventFormProps> = ({ defaultState, on
           <Select labelId="eventType" id="demo-simple-select" label="Event Type" {...register('type', { required: true })} value={type}>
             <MenuItem value={EventType.RFE}>RFE</MenuItem>
             <MenuItem value={EventType.RFO}>RFO</MenuItem>
-            <MenuItem value={EventType.MSA}>MSA</MenuItem>
+            <MenuItem value={EventType.MSE}>MSE</MenuItem>
           </Select>
         </FormControl>
         <Button variant="contained" type="submit">
