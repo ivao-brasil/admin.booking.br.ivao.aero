@@ -1,5 +1,5 @@
 import { Card, CardActions, CardContent, CardHeader, CardMedia, Collapse, IconButton, IconButtonProps, styled, Tooltip, Typography } from '@material-ui/core';
-import { Bookmark, Delete, Edit, ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
+import { Bookmark, Delete, Edit, EventNote, ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
 import { FunctionComponent, useState } from 'react';
 import { Event } from '../../../types/Event';
 
@@ -63,7 +63,7 @@ export const EventCard: FunctionComponent<EventCardProps> = ({ event, onEdit, on
         {slotRedirection && (
           <Tooltip title={`Slots ${event.eventName}`}>
             <IconButton aria-label="delete" onClick={() => slotRedirection(event)}>
-              <Bookmark />
+              <EventNote />
             </IconButton>
           </Tooltip>
         )}

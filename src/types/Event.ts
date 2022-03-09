@@ -4,7 +4,7 @@ import { User } from './User';
 export enum EventType {
   RFE = 'rfe',
   RFO = 'rfo',
-  MSA = 'msa',
+  MSE = 'mse',
 }
 
 export interface Event {
