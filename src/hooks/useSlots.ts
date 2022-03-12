@@ -1,3 +1,4 @@
+import { ONE_HOUR } from './../constants';
 import { useContext } from 'react';
 import { IocContext } from '../context/IocContext';
 import { AuthContext } from '../context/AuthContext';
@@ -23,7 +24,7 @@ export const useSlots = (eventId: number, page = 1, perPage = 5) => {
         perPage,
       }),
     {
-      staleTime: ONE_DAY,
+      staleTime: ONE_HOUR * 12,
       keepPreviousData: true,
     }
   );
