@@ -1,5 +1,5 @@
+import { ONE_HOUR } from './../constants';
 import { useQuery } from 'react-query';
-import { ONE_DAY } from '../constants';
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { IocContext } from '../context/IocContext';
@@ -14,7 +14,7 @@ export const useEvents = (page = 1, perPage = 5) => {
     ],
     () => apiClient.getEvents(token, { page, perPage }),
     {
-      staleTime: ONE_DAY,
+      staleTime: ONE_HOUR * 12,
       enabled: Boolean(token),
       keepPreviousData: true
     }
