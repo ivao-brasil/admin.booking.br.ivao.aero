@@ -1,12 +1,12 @@
-import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, InputLabel, MenuItem, Select, TextField, Tooltip } from '@material-ui/core';
-import { FunctionComponent, useContext, useEffect } from 'react';
+import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
+import { DateTimePicker } from '@mui/lab';
+import { FunctionComponent, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation, useQueryClient } from 'react-query';
 import { AuthContext } from '../../../context/AuthContext';
 import { IocContext } from '../../../context/IocContext';
 import { NotificationContext, NotificationType } from '../../../context/NotificationContext';
-import { Event, EventType } from '../../../types/Event';
-import { DatePicker, DateTimePicker } from '@mui/lab';
+import { Event, EventStatus, EventType } from '../../../types/Event';
 
 interface IEventFormProps {
   defaultState?: Event;
@@ -24,6 +24,7 @@ export interface EventForm {
   banner: string;
   atcBooking: string;
   type: EventType;
+  status: EventStatus;
   airports: string;
 }
 
@@ -40,7 +41,7 @@ export const EventForm: FunctionComponent<IEventFormProps> = ({ defaultState, on
       : {},
   });
 
-  const { banner, privateSlots, dateEnd, dateStart, type } = watch();
+  const { banner, privateSlots, dateEnd, dateStart, type, status } = watch();
   const { apiClient } = useContext(IocContext);
   const { token } = useContext(AuthContext);
   const { dispatch } = useContext(NotificationContext);
@@ -154,6 +155,14 @@ export const EventForm: FunctionComponent<IEventFormProps> = ({ defaultState, on
             <MenuItem value={EventType.RFE}>RFE</MenuItem>
             <MenuItem value={EventType.RFO}>RFO</MenuItem>
             <MenuItem value={EventType.MSE}>MSE</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl fullWidth>
+          <InputLabel id="eventStatus">Event Status</InputLabel>
+          <Select labelId="eventStatus" id="eventStatusSelect" label="Event Status" {...register('status', { required: true })} value={status}>
+            <MenuItem value={EventStatus.CREATED}>Criado</MenuItem>
+            <MenuItem value={EventStatus.SCHEDULED}>Reserva Disponível</MenuItem>
+            <MenuItem value={EventStatus.FINISHED}>Finalizado</MenuItem>
           </Select>
         </FormControl>
         <Button variant="contained" type="submit">

@@ -7,6 +7,12 @@ export enum EventType {
   MSE = 'mse',
 }
 
+export enum EventStatus {
+  CREATED = 'created',
+  SCHEDULED = 'scheduled',
+  FINISHED = 'finished',
+}
+
 export interface Event {
   id: number;
   dateStart: number;
@@ -20,5 +26,6 @@ export interface Event {
   atcBooking: string;
   creator?: User;
   type: EventType;
+  status: EventStatus;
   airports: Array<Airport>;
 }
