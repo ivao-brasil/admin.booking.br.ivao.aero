@@ -1,8 +1,8 @@
 on: push
-name: 🚀 Deploy to Stage
+name: 🚀 Deploy to Production
 jobs:
-  FTP-Deploy-Action:
-    name: FTP-Deploy-Action
+  Build-and-Deploy:
+    name: Build-and-Deploy
     if: github.ref == 'refs/heads/stage'
     runs-on: ubuntu-latest
     steps:
