@@ -4,7 +4,13 @@ import { User } from './User';
 export enum EventType {
   RFE = 'rfe',
   RFO = 'rfo',
-  MSA = 'msa',
+  MSE = 'mse',
+}
+
+export enum EventStatus {
+  CREATED = 'created',
+  SCHEDULED = 'scheduled',
+  FINISHED = 'finished',
 }
 
 export interface Event {
@@ -20,5 +26,6 @@ export interface Event {
   atcBooking: string;
   creator?: User;
   type: EventType;
+  status: EventStatus;
   airports: Array<Airport>;
 }

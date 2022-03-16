@@ -142,13 +142,19 @@ export const UserList = () => {
       {confirm && selectedUser && (
         <ConfirmUserBlock
           user={selectedUser}
-          onConfirm={() =>
-            blockUser.mutate({
-              selectedUser,
-              suspended: !selectedUser?.suspended,
-              token,
-            })
-          }
+          onConfirm={(data) => {
+            if(data) {
+              blockUser.mutate({
+                selectedUser,
+                suspended: !selectedUser?.suspended,
+                token,
+              })
+            }
+            setSelectedUser(undefined);
+            setConfirm(false);
+            
+            return;
+          }}
         />
       )}
       <DataGrid

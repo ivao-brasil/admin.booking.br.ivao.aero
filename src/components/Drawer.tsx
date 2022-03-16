@@ -1,5 +1,5 @@
 import { Divider, Drawer as MuiDrawer, IconButton, List, ListItemButton, ListItemIcon, ListItemText } from '@material-ui/core';
-import { ChevronLeft, ChevronRight, Event, Home, People } from '@material-ui/icons';
+import { ChevronLeft, ChevronRight, Event, Home, People, Flight } from '@material-ui/icons';
 import { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
 import { Logout } from '@mui/icons-material';
@@ -34,28 +34,35 @@ export const Drawer: FunctionComponent<DrawerProps> = ({ open, handleClose }) =>
       </div>
       <Divider />
       <List>
-        <ListItemButton component={Link} to="/admin">
+        <ListItemButton component={Link} to="/">
           <ListItemIcon>
             <People />
           </ListItemIcon>
           <ListItemText primary="Home" />
         </ListItemButton>
 
-        <ListItemButton component={Link} to="/admin/users">
+        <ListItemButton component={Link} to="/users">
           <ListItemIcon>
             <Home />
           </ListItemIcon>
           <ListItemText primary="Users" />
         </ListItemButton>
 
-        <ListItemButton component={Link} to="/admin/events">
+        <ListItemButton component={Link} to="/events">
           <ListItemIcon>
             <Event />
           </ListItemIcon>
           <ListItemText primary="Events" />
         </ListItemButton>
 
-        <ListItemButton component={Link} to="/admin/logout">
+        <ListItemButton component={Link} to="/sceneries">
+          <ListItemIcon>
+            <Flight />
+          </ListItemIcon>
+          <ListItemText primary="Sceneries" />
+        </ListItemButton>
+
+        <ListItemButton component={Link} to="/logout">
           <ListItemIcon>
             <Logout />
           </ListItemIcon>

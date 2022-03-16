@@ -4,16 +4,18 @@ import { HomePage } from '../pages/home/HomePage';
 import { UsersPage } from '../pages/users/UsersPage';
 import { SlotsPage } from '../pages/slots/SlotsPage';
 import { Logout } from '../pages/Logout';
+import { SceneriesPage } from '../pages/sceneries/SceneriesPage';
 
 export const PrivateRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/admin" element={<HomePage />} />
-        <Route path="/admin/users" element={<UsersPage />} />
-        <Route path="/admin/events" element={<EventsPage />} />
-        <Route path="/admin/events/:eventId/slots" element={<SlotsPage />} />
-        <Route path="/admin/logout" element={<Logout />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/users" element={<UsersPage />} />
+        <Route path="/events" element={<EventsPage />} />
+        <Route path="/events/:eventId/slots" element={<SlotsPage />} />
+        <Route path="/sceneries" element={<SceneriesPage />} />
+        <Route path="/logout" element={<Logout />} />
       </Routes>
     </BrowserRouter>
   );

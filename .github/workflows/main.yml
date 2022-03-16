@@ -1,8 +1,8 @@
 on: push
-name: 🚀 Deploy to Stage
+name: 🚀 Deploy to Production
 jobs:
-  FTP-Deploy-Action:
-    name: FTP-Deploy-Action
+  Build-and-Deploy:
+    name: Build-and-Deploy
     if: github.ref == 'refs/heads/stage'
     runs-on: ubuntu-latest
     steps:
@@ -18,10 +18,10 @@ jobs:
     - name: Make envfile
       uses: SpicyPizza/create-envfile@v1.3
       with:
-        envkey_REACT_APP_DEV: true
-        envkey_REACT_APP_MAIN_SYSTEM_URL: "https://kronos.stage.br.ivao.aero"
-        envkey_REACT_APP_API_HOST: ${{ secrets.STAGE_API_HOST }}
-        envkey_REACT_APP_LOGO_URL: "https://assets.br.ivao.aero/logos/tag_white.png"
+        envkey_REACT_APP_DEV: ${{ secrets.PRODUCTION_REACT_APP_DEV }}
+        envkey_REACT_APP_MAIN_SYSTEM_URL: ${{ secrets.PRODUCTION_REACT_APP_MAIN_SYSTEM_URL }}
+        envkey_REACT_APP_API_HOST: ${{ secrets.PRODUCTION_REACT_APP_API_HOST }}
+        envkey_REACT_APP_LOGO_URL: ${{ secrets.PRODUCTION_REACT_APP_LOGO_URL }}
         envkey_WDS_SOCKET_PATH: "/sockjs-node"
         file_name: .env
         fail_on_empty: false
@@ -30,15 +30,14 @@ jobs:
       run: |
         yarn install
         CI=false yarn build
-
     - name: List output files
       run: find build/ -print
 
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@4.1.0
       with:
-        server: ${{ secrets.STAGE_FTP_HOST }}
-        username: ${{ secrets.STAGE_FTP_USERNAME }}
-        password: ${{ secrets.STAGE_FTP_PASSWORD }}
+        server: ${{ secrets.PRODUCTION_FTP_HOST }}
+        username: ${{ secrets.PRODUCTION_FTP_USERNAME }}
+        password: ${{ secrets.PRODUCTION_FTP_PASSWORD }}
         local-dir: build/
         server-dir: /

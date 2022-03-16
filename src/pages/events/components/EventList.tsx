@@ -26,6 +26,8 @@ export const EventList: FunctionComponent<EventListProps> = ({ onEdit }) => {
   const navigate = useNavigate();
 
   const { events, eventsLoading } = useEvents();
+  // const eventsLoading = false;
+  // const events: Event[] = [];
 
   const deleteEvent = useMutation((event: Event) => apiClient.deleteEvent(event, token), {
     onSuccess: () => {
@@ -60,7 +62,7 @@ export const EventList: FunctionComponent<EventListProps> = ({ onEdit }) => {
         {!eventsLoading &&
           events.map(event => (
             <Grid item xs={4} key={event.id}>
-              <EventCard event={event} onEdit={onEdit} onDelete={onDelete} slotRedirection={event => navigate(`/admin/events/${event.id}/slots`)} />
+              <EventCard event={event} onEdit={onEdit} onDelete={onDelete} slotRedirection={event => navigate(`/events/${event.id}/slots`)} />
             </Grid>
           ))}
       </Grid>
