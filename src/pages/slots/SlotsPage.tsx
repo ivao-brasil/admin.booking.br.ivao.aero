@@ -102,7 +102,7 @@ export const SlotsPage = () => {
           <TabPanel value="4">
             <Grid container spacing={2}>
               <Grid item>
-                <Button variant="contained" href="/api/slot/many" endIcon={<Download />}>
+                <Button variant="contained" href={`${process.env.REACT_APP_API_HOST}/slot/many`} endIcon={<Download />}>
                   Download Template
                 </Button>
               </Grid>
