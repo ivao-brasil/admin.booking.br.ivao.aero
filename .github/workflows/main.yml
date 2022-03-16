@@ -3,7 +3,7 @@ name: 🚀 Deploy to Production
 jobs:
   Build-and-Deploy:
     name: Build-and-Deploy
-    if: github.ref == 'refs/heads/stage'
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
