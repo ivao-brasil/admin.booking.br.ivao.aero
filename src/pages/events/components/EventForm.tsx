@@ -162,7 +162,6 @@ export const EventForm: FunctionComponent<IEventFormProps> = ({ defaultState, on
           <Select labelId="eventStatus" id="eventStatusSelect" label="Event Status" {...register('status', { required: true })} value={status}>
             <MenuItem value={EventStatus.CREATED}>Disable Booking</MenuItem>
             <MenuItem value={EventStatus.SCHEDULED}>Enable Booking</MenuItem>
-            <MenuItem value={EventStatus.FINISHED}>Finished</MenuItem>
           </Select>
         </FormControl>
         <Button variant="contained" type="submit">
