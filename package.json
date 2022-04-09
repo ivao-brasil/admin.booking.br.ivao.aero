@@ -22,7 +22,7 @@
     "axios": "^0.24.0",
     "common": "*",
     "date-fns": "^2.28.0",
-    "moment": "^2.29.1",
+    "moment": "^2.29.2",
     "prettier": "^2.5.1",
     "react": "^17.0.2",
     "react-data-table-component": "^7.4.6",
