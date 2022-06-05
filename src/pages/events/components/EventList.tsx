@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core';
+import { Grid, Box, Button } from '@material-ui/core';
 import { FunctionComponent, useContext, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
@@ -25,9 +25,10 @@ export const EventList: FunctionComponent<EventListProps> = ({ onEdit }) => {
 
   const navigate = useNavigate();
 
-  const { events, eventsLoading } = useEvents();
-  // const eventsLoading = false;
-  // const events: Event[] = [];
+  const [page] = useState(0);
+  const perPage = 6;
+
+  const { events, fetchNextPage, hasNextPage, isLoading } = useEvents(page + 1, perPage);
 
   const deleteEvent = useMutation((event: Event) => apiClient.deleteEvent(event, token), {
     onSuccess: () => {
@@ -59,13 +60,20 @@ export const EventList: FunctionComponent<EventListProps> = ({ onEdit }) => {
         />
       )}
       <Grid container spacing={2}>
-        {!eventsLoading &&
+        {!isLoading &&
           events.map(event => (
             <Grid item xs={4} key={event.id}>
               <EventCard event={event} onEdit={onEdit} onDelete={onDelete} slotRedirection={event => navigate(`/events/${event.id}/slots`)} />
             </Grid>
           ))}
       </Grid>
+      {hasNextPage && (
+        <Box textAlign='center' marginTop={2}>
+          <Button onClick={() => fetchNextPage()} disabled={isLoading}>
+            Load more
+          </Button>
+        </Box>
+      )}
     </div>
   );
 };

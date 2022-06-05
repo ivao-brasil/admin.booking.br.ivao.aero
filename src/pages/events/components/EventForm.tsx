@@ -13,7 +13,7 @@ interface IEventFormProps {
   onPersist: () => void;
 }
 
-export interface EventForm {
+export interface IEventForm {
   dateStart: Date;
   dateEnd: Date;
   eventName: string;
@@ -29,7 +29,7 @@ export interface EventForm {
 }
 
 export const EventForm: FunctionComponent<IEventFormProps> = ({ defaultState, onPersist }) => {
-  const { register, handleSubmit, watch, reset, setValue } = useForm<EventForm>({
+  const { register, handleSubmit, watch, reset, setValue } = useForm<IEventForm>({
     defaultValues: defaultState
       ? {
           ...defaultState,
@@ -49,7 +49,7 @@ export const EventForm: FunctionComponent<IEventFormProps> = ({ defaultState, on
   const queryClient = useQueryClient();
 
   const createEvent = useMutation(
-    (data: EventForm) =>
+    (data: IEventForm) =>
       apiClient.createEvent(
         {
           ...data,
@@ -73,7 +73,7 @@ export const EventForm: FunctionComponent<IEventFormProps> = ({ defaultState, on
   );
 
   const updateEvent = useMutation(
-    (data: EventForm) =>
+    (data: IEventForm) =>
       apiClient.updateEvent(
         defaultState?.id || 0,
         {
@@ -97,7 +97,7 @@ export const EventForm: FunctionComponent<IEventFormProps> = ({ defaultState, on
     }
   );
 
-  const onSubmit = (data: EventForm) => {
+  const onSubmit = (data: IEventForm) => {
     if (!defaultState) {
       return createEvent.mutate(data);
     }

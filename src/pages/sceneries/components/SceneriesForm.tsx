@@ -1,4 +1,4 @@
-import { Button, Checkbox, FormControlLabel, FormGroup } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { FunctionComponent, useContext } from 'react';
 import { useForm } from 'react-hook-form';
@@ -7,7 +7,6 @@ import { AuthContext } from '../../../context/AuthContext';
 import { IocContext } from '../../../context/IocContext';
 import { NotificationContext, NotificationType } from '../../../context/NotificationContext';
 import { Scenery } from '../../../types/Scenery';
-import { Slot, SlotType } from '../../../types/Slot';
 
 interface ISceneryForm {
   title: string;

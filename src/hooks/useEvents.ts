@@ -1,5 +1,5 @@
 import { ONE_HOUR } from './../constants';
-import { useQuery } from 'react-query';
+import { useInfiniteQuery } from 'react-query';
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { IocContext } from '../context/IocContext';
@@ -8,21 +8,29 @@ export const useEvents = (page = 1, perPage = 5) => {
   const { apiClient } = useContext(IocContext);
   const { token } = useContext(AuthContext);
 
-  const { data, isLoading } = useQuery(
-    [
-      'events', { page, perPage }
-    ],
-    () => apiClient.getEvents(token, { page, perPage }),
+  const { fetchNextPage, hasNextPage, data, isLoading } = useInfiniteQuery(
+    ['events', { page, perPage }],
+    ({ pageParam }) => apiClient.getEvents(token, pageParam),
     {
       staleTime: ONE_HOUR * 12,
       enabled: Boolean(token),
-      keepPreviousData: true
-    }
-  );
+      keepPreviousData: true,
+      getNextPageParam: (lastPage, allPages) => {
+        const allEvents = allPages.reduce((acc, page) => acc + page.data.length, 0);
+        const hasMorePages = allEvents < (lastPage.total - 1);
 
+        if (hasMorePages)
+          return { page: lastPage.page + 1, perPage };
+        
+        return null;
+      }
+    }
+  )
+  
   return {
-    events: data ? data.data : [],
-    count: data ? data.total : 0,
-    eventsLoading: isLoading,
+    fetchNextPage,
+    hasNextPage,
+    events: data ? data.pages.map(page => page.data).flat() : [],
+    isLoading
   };
 };
