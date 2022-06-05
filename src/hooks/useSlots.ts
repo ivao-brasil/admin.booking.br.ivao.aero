@@ -3,7 +3,6 @@ import { useContext } from 'react';
 import { IocContext } from '../context/IocContext';
 import { AuthContext } from '../context/AuthContext';
 import { useQuery } from 'react-query';
-import { ONE_DAY } from '../constants';
 
 export const useSlots = (eventId: number, page = 1, perPage = 5) => {
   const { apiClient } = useContext(IocContext);
