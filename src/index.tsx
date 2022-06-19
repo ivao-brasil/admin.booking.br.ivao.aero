@@ -8,8 +8,6 @@ import { NotificationProvider } from './context/NotificationContext';
 import { theme } from './theme';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ONE_HOUR } from './constants';
-import { createWebStoragePersistor } from 'react-query/createWebStoragePersistor-experimental';
-import { persistQueryClient } from 'react-query/persistQueryClient-experimental';
 import { Env } from './env';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { LocalizationProvider } from '@mui/lab';
@@ -21,13 +19,6 @@ const queryClient = new QueryClient({
       cacheTime: ONE_HOUR,
     },
   },
-});
-
-const localStoragePersistor = createWebStoragePersistor({ storage: window.localStorage });
-
-persistQueryClient({
-  queryClient,
-  persistor: localStoragePersistor,
 });
 
 ReactDOM.render(
