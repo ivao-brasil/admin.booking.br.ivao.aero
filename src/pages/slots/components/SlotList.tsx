@@ -56,7 +56,17 @@ export const SlotList: FunctionComponent<SlotListProp> = ({ onEdit }) => {
       field: 'company',
       headerName: 'Airline',
       editable: false,
-      renderCell: data => <img alt="airline logo" src={`${Env.API_HOST}/logo/airline/${data.row.flightNumber.substring(0, 3)}`} />,
+      renderCell: data => {
+        const flightNumber = data.row.flightNumber;
+
+        if (!flightNumber) {
+          return;
+        }
+
+        return (
+          <img alt="airline logo" src={`${Env.API_HOST}/logo/airline/${data.row.flightNumber.substring(0, 3)}`} />
+        );
+      },
       filterable: true,
     },
     {
@@ -64,7 +74,7 @@ export const SlotList: FunctionComponent<SlotListProp> = ({ onEdit }) => {
       field: 'flightNumber',
       headerName: 'Callsign',
       editable: false,
-      renderCell: data => <b>{data.row.flightNumber}</b>,
+      renderCell: data => data.row.flightNumber && (<b>{data.row.flightNumber}</b>),
       filterable: true,
     },
     {
