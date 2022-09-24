@@ -15,6 +15,9 @@ jobs:
         node-version: '14.x'
         cache: 'yarn'
 
+    - name: Install dependencies
+      run: yarn install --frozen-lockfile
+
     - name: Build Project
       env:
         CI: false
@@ -22,9 +25,7 @@ jobs:
         REACT_APP_MAIN_SYSTEM_URL: ${{ secrets.PRODUCTION_REACT_APP_MAIN_SYSTEM_URL }}
         REACT_APP_API_HOST: ${{ secrets.PRODUCTION_REACT_APP_API_HOST }}
         REACT_APP_LOGO_URL: ${{ secrets.PRODUCTION_REACT_APP_LOGO_URL }}
-      run: |
-        yarn install
-        yarn build
+      run: yarn build
 
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@4.1.0
