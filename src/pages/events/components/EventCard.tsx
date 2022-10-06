@@ -1,5 +1,6 @@
 import { Card, CardActions, CardContent, CardHeader, CardMedia, Collapse, IconButton, IconButtonProps, styled, Tooltip, Typography } from '@material-ui/core';
 import { Delete, Edit, EventNote, ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import { FunctionComponent, useState } from 'react';
 import { Event } from '../../../types/Event';
 
@@ -8,6 +9,7 @@ interface EventCardProps {
   onEdit?: (event: Event) => void;
   onDelete?: (event: Event) => void;
   slotRedirection?: (event: Event) => void;
+  onReportRequest?: (event: Event) => void;
 }
 
 interface ExpandMoreProps extends IconButtonProps {
@@ -27,7 +29,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 const months = ['Jannuary', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-export const EventCard: FunctionComponent<EventCardProps> = ({ event, onEdit, onDelete, slotRedirection }) => {
+export const EventCard: FunctionComponent<EventCardProps> = ({ event, onEdit, onDelete, slotRedirection, onReportRequest }) => {
   const [expanded, setExpanded] = useState(false);
 
   const formatDate = (date: Date) => {
@@ -61,10 +63,27 @@ export const EventCard: FunctionComponent<EventCardProps> = ({ event, onEdit, on
         )}
 
         {slotRedirection && (
-          <Tooltip title={`Slots ${event.eventName}`}>
-            <IconButton aria-label="delete" onClick={() => slotRedirection(event)}>
+          <Tooltip title={`View ${event.eventName} Slots`}>
+            <IconButton aria-label="View slots" onClick={() => slotRedirection(event)}>
               <EventNote />
             </IconButton>
+          </Tooltip>
+        )}
+
+        {onReportRequest && (
+          <Tooltip title={event.has_ended
+             ? `Download ${event.eventName} Report`
+             : 'Download is enabled only for finished events'}
+          >
+            <div>
+              <IconButton
+                aria-label="download report"
+                disabled={!event.has_ended}
+                onClick={() => onReportRequest(event)}
+              >
+                <FileDownloadIcon />
+              </IconButton>
+            </div>
           </Tooltip>
         )}
 
