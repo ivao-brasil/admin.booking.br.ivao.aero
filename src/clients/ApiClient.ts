@@ -104,12 +104,12 @@ export class ApiClient {
       .then(response => response.data);
   }
 
-  deleteEvent(event: Event, token: string) {
-    return this.axios
+  async deleteEvent(event: Event, token: string) {
+    const response = await this.axios
       .delete(`/event/${event.id}`, {
         headers: { Authorization: `Bearer ${token}` },
-      })
-      .then(response => response.data);
+      });
+    return response.data;
   }
 
   async getSlotsByEvent(eventId: number, token: string, filter?: PaginateRequest) {
@@ -121,36 +121,36 @@ export class ApiClient {
       .then(response => response.data);
   }
 
-  createSlot(eventId: number, data: Partial<Slot>, token: string) {
-    return this.axios
+  async createSlot(eventId: number, data: Partial<Slot>, token: string) {
+    const response = await this.axios
       .post(`/event/${eventId}/slot`, data, {
         headers: { Authorization: `Bearer ${token}` },
-      })
-      .then(response => response.data);
+      });
+    return response.data;
   }
 
-  updateSlot(slotId: number, data: Partial<Slot>, token: string) {
-    return this.axios
+  async updateSlot(slotId: number, data: Partial<Slot>, token: string) {
+    const response = await this.axios
       .put(`/slot/${slotId}`, data, {
         headers: { Authorization: `Bearer ${token}` },
-      })
-      .then(response => response.data);
+      });
+    return response.data;
   }
 
-  deleteSlot(id: number, token: string) {
-    return this.axios
+  async deleteSlot(id: number, token: string) {
+    const response = await this.axios
       .delete(`/slot/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
-      })
-      .then(response => response.data);
+      });
+    return response.data;
   }
 
-  createManySlots(eventId: number, token: string, data: FormData) {
-    return this.axios
+  async createManySlots(eventId: number, token: string, data: FormData) {
+    const response = await this.axios
       .post(`/event/${eventId}/slot/many`, data, {
         headers: { Authorization: `Bearer ${token}` },
-      })
-      .then(response => response.data);
+      });
+    return response.data;
   }
 
   async getScenaries(token: string, data: PaginateRequest = {}) {
@@ -162,27 +162,54 @@ export class ApiClient {
       .then(response => response.data);
   }
 
-  createScenery(data: Partial<Scenery>, token: string) {
-    return this.axios
+  async createScenery(data: Partial<Scenery>, token: string) {
+    const response = await this.axios
       .post(`/scenery`, data, {
         headers: { Authorization: `Bearer ${token}` },
-      })
-      .then(response => response.data);
+      });
+    return response.data;
   }
 
-  updateScenery(id: number, data: Partial<Scenery>, token: string) {
-    return this.axios
+  async updateScenery(id: number, data: Partial<Scenery>, token: string) {
+    const response = await this.axios
       .put(`/scenery/${id}`, data, {
         headers: { Authorization: `Bearer ${token}` },
-      })
-      .then(response => response.data);
+      });
+    return response.data;
   }
 
-  deleteScenery(id: number, token: string) {
-    return this.axios
+  async deleteScenery(id: number, token: string) {
+    const response = await this.axios
       .delete(`/scenery/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
+      });
+    return response.data;
+  }
+
+  async downloadReport(event: Event, token: string) {
+    return this.axios
+      .get<Blob>(`/event/${event.id}/export`, {
+        headers: { Authorization: `Bearer ${token}` },
+        responseType: 'blob'
       })
-      .then(response => response.data);
+      .then(response => {
+        const filename = `event_${event.id}_export.csv`;
+        this.createTemporaryDownloadLinkForBlob(response.data, filename);
+      });
+  }
+
+  private createTemporaryDownloadLinkForBlob(blob: Blob, filename: string) {
+    const href = URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.href = href;
+    link.setAttribute('download', filename);
+    document.body.appendChild(link);
+    link.click();
+
+    setTimeout(() => {
+      document.body.removeChild(link);
+      URL.revokeObjectURL(href);
+    });
   }
 }

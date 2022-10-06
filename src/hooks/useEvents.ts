@@ -21,16 +21,16 @@ export const useEvents = (page = 1, perPage = 5) => {
 
         if (hasMorePages)
           return { page: lastPage.page + 1, perPage };
-        
+
         return null;
       }
     }
   )
-  
+
   return {
     fetchNextPage,
     hasNextPage,
     events: data ? data.pages.map(page => page.data).flat() : [],
-    isLoading
+    isLoading,
   };
 };
