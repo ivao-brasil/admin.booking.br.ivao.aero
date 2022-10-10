@@ -1,5 +1,6 @@
 import { Grid, Box, Button } from '@material-ui/core';
-import { FunctionComponent, useContext, useState } from 'react';
+import CircularProgress from '@mui/material/CircularProgress';
+import { FunctionComponent, useContext, useMemo, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { Confirm } from '../../../components/Confirm';
@@ -28,7 +29,7 @@ export const EventList: FunctionComponent<EventListProps> = ({ onEdit }) => {
   const [page] = useState(0);
   const perPage = 6;
 
-  const { events, fetchNextPage, hasNextPage, isLoading } = useEvents(page + 1, perPage);
+  const { events, fetchNextPage, hasNextPage, isLoading: isEventLoading } = useEvents(page + 1, perPage);
 
   const deleteEvent = useMutation((event: Event) => apiClient.deleteEvent(event, token), {
     onSuccess: () => {
@@ -40,10 +41,27 @@ export const EventList: FunctionComponent<EventListProps> = ({ onEdit }) => {
     },
   });
 
+  const downloadEventReport = useMutation((event: Event) => apiClient.downloadReport(event, token), {
+    onError: () => {
+      dispatch('Error while generating the event report', 'Unexpected Error', NotificationType.ERROR, 5000);
+    },
+  });
+
   const onDelete = (event: Event) => {
     setConfirm(true);
     setEvent(event);
   };
+
+  const onReportRequest = (event: Event) => {
+    downloadEventReport.mutateAsync(event);
+  };
+
+  const isLoading = useMemo(() => {
+    return isEventLoading
+      || deleteEvent.isLoading
+      || downloadEventReport.isLoading;
+
+  }, [isEventLoading, deleteEvent.isLoading, downloadEventReport.isLoading]);
 
   return (
     <div>
@@ -52,7 +70,7 @@ export const EventList: FunctionComponent<EventListProps> = ({ onEdit }) => {
           text={`Please confirm if you want to delete event ${event?.eventName}`}
           onConfirm={result => {
             if (event && result) {
-              deleteEvent.mutate(event);
+              deleteEvent.mutateAsync(event);
             }
             setConfirm(false);
           }}
@@ -60,16 +78,27 @@ export const EventList: FunctionComponent<EventListProps> = ({ onEdit }) => {
         />
       )}
       <Grid container spacing={2}>
-        {!isLoading &&
-          events.map(event => (
-            <Grid item xs={4} key={event.id}>
-              <EventCard event={event} onEdit={onEdit} onDelete={onDelete} slotRedirection={event => navigate(`/events/${event.id}/slots`)} />
-            </Grid>
-          ))}
+        {isLoading
+          ? (
+            <Box sx={{ display: 'flex', margin: '3rem auto' }}>
+              <CircularProgress />
+            </Box>
+          ) : events.map(event => (
+              <Grid item xs={4} key={event.id}>
+                <EventCard
+                  event={event}
+                  onEdit={onEdit}
+                  onDelete={onDelete}
+                  onReportRequest={onReportRequest}
+                  slotRedirection={event => navigate(`/events/${event.id}/slots`)}
+                />
+              </Grid>
+            ))
+          }
       </Grid>
-      {hasNextPage && (
+      {(hasNextPage && !deleteEvent.isLoading && !downloadEventReport.isLoading) && (
         <Box textAlign='center' marginTop={2}>
-          <Button onClick={() => fetchNextPage()} disabled={isLoading}>
+          <Button onClick={() => fetchNextPage()} disabled={isEventLoading}>
             Load more
           </Button>
         </Box>
