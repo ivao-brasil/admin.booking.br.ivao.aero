@@ -7,6 +7,7 @@ import { AuthContext } from '../../../context/AuthContext';
 import { IocContext } from '../../../context/IocContext';
 import { NotificationContext, NotificationType } from '../../../context/NotificationContext';
 import { Slot, SlotType } from '../../../types/Slot';
+import { User } from '../../../types/User';
 
 interface ISlotForm {
   type: SlotType;
@@ -17,6 +18,7 @@ interface ISlotForm {
   gate: string;
   aircraft: string;
   private: boolean;
+  owner: User;
 }
 
 interface ISlotFormProps {
@@ -96,6 +98,7 @@ export const SlotForm: FunctionComponent<ISlotFormProps> = ({ defaultState, even
         <FormGroup>
           <FormControlLabel control={<Checkbox {...register('private')} checked={slotPrivate} />} label="Private" />
         </FormGroup>
+        <TextField label="Pilot VID" {...register('owner.vid', { maxLength: 6 })} />
         <Button variant="contained" type="submit">
           Save
         </Button>
