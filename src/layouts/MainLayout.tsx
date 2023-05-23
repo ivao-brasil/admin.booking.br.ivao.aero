@@ -34,7 +34,7 @@ export const MainLayout: FunctionComponent = ({ children }) => {
               <Menu />
             </IconButton>
 
-            <img alt="Division LOGO" src={Env.LOGO_URL} height="45" />
+            <img alt="Division LOGO" src={Env.ASSETS_HOST + "/logos/tag_white.png"} height="45" />
 
             <Typography variant="h6" noWrap component="div">
               Booking System Admin
