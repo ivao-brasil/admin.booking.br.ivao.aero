@@ -1,6 +1,7 @@
 import { useContext, useEffect } from 'react';
 import { BrowserRouter, Route, Routes, useNavigate, useSearchParams } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import { Env } from '../env';
 
 export const RedirectToLogin = () => {
   const [urlParams] = useSearchParams();
@@ -24,7 +25,7 @@ export const RedirectToLogin = () => {
     }
 
     if (!IVAOTOKEN) {
-      const ivaoLoginUrl = 'https://login.ivao.aero/index.php?url={url}';
+      const ivaoLoginUrl = Env.AUTHORIZATION_SERVER;
       const baseUrl = window.location.href;
       window.location.href = ivaoLoginUrl.replace('{url}', `${baseUrl}?redirect=${window.location.pathname}`);
       return;
