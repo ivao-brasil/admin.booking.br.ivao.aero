@@ -38,7 +38,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "start:local": "set NODE_ENV=development && npm start & npm run start:mock",
+    "start:local": "concurrently \"cross-env NODE_ENV=development npm start\" \"npm run start:mock\"",
     "start:mock": "nodemon mock-server/server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -66,6 +66,8 @@
   "devDependencies": {
     "@types/axios": "^0.14.0",
     "@types/moment": "^2.13.0",
+    "concurrently": "^9.1.0",
+    "cross-env": "^7.0.3",
     "jsonwebtoken": "^9.0.2",
     "nodemon": "^3.1.7"
   }
