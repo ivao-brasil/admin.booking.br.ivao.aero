@@ -65,6 +65,14 @@ export class ApiClient {
         };
       });
   }
+  
+  async getDivisions(token: string) {
+    return this.axios
+      .get<Array<string>>('/divisions', {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then(response => response.data);
+  }
 
   async getUsers(data: UserRequest, token: string) {
     const queryString = fromObjectToQueryString(data);
