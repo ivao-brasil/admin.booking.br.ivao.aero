@@ -1,39 +1,54 @@
 import { useContext, useEffect } from 'react';
-import { BrowserRouter, Route, Routes, useNavigate, useSearchParams } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import { Env } from '../env';
 
 export const RedirectToLogin = () => {
   const [urlParams] = useSearchParams();
-  const IVAOTOKEN = urlParams.get("IVAOTOKEN");
+  const { signed, token } = useContext(AuthContext);
+  const ivaoToken = urlParams.get('IVAOTOKEN');
 
   const { signIn, user } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user) {
-      window.location.href = '/';
+    if (signed) {
+      const redirectPath = urlParams.get('redirect') || '/';
+      navigate(redirectPath, { replace: true });
     }
+  }, [signed, urlParams, navigate]);
 
-    const redirect = urlParams.get("redirect");
-    if (redirect && redirect.indexOf("IVAOTOKEN") !== -1) {
-        /*
-            Se o servidor estiver rodando em localhost:3000, o site de login da IVAO irá redirecionar com uma query inválida
-            Ex: new URLSearchParams(window.location.search).get("redirect") = /?IVAOTOKEN=error
-        */
-        throw new Error(`The IVAO Login service rejected the request. The server is in ivao.aero domain? Token query: ${redirect}`);
-    }
-
-    if (!IVAOTOKEN) {
-      const ivaoLoginUrl = 'https://login.ivao.aero/index.php?url={url}';
-      const baseUrl = window.location.href;
-      window.location.href = ivaoLoginUrl.replace('{url}', `${baseUrl}?redirect=${window.location.pathname}`);
+  useEffect(() => {
+    if (token) {
       return;
     }
 
-    signIn(IVAOTOKEN).then(() => {
-      navigate(redirect || '');
-    });
-  }, [IVAOTOKEN, signIn, navigate, user, urlParams]);
+    const redirectUrlParam = urlParams.get('redirect');
+    if (redirectUrlParam && redirectUrlParam.indexOf('IVAOTOKEN') !== -1) {
+      throw new Error(`The IVAO Login service rejected the request. The server is in ivao.aero domain? Token query: ${redirectUrlParam}`);
+    }
+
+    if (ivaoToken) {
+      signIn(ivaoToken);
+      return;
+    }
+    const location = useLocation();
+
+    let locationState: { from?: Location } | null = null;
+    if (typeof location.state === 'object') {
+      locationState = location.state;
+    }
+
+    const baseUrl = window.location.href;
+    let loginUrl = `${Env.AUTHORIZATION_SERVER}?url=${baseUrl}`;
+
+    const redirectPath = locationState?.from?.pathname;
+    if (redirectPath) {
+      loginUrl += '?redirect=' + redirectPath;
+    }
+
+    window.location.href = loginUrl;
+  }, [ivaoToken, signIn, navigate, user, urlParams]);
 
   return <>Loading...</>;
 };
