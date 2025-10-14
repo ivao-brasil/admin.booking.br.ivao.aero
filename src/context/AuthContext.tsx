@@ -1,4 +1,4 @@
-import { createContext, FunctionComponent, useContext, useEffect, useState } from 'react';
+import { createContext, FunctionComponent, useCallback, useContext, useEffect, useState } from 'react';
 import { User } from '../types/User';
 import { IocContext } from './IocContext';
 
@@ -42,17 +42,17 @@ export const AuthProvider: FunctionComponent = ({ children }) => {
     }
   }, [apiClient, token]);
 
-  const signIn = async (ivaoToken: string) => {
+  const signIn = useCallback(async (ivaoToken: string) => {
     const { jwt } = await apiClient.auth(ivaoToken);
     setToken(jwt);
     localStorage.setItem('token', jwt);
-  };
+  }, [apiClient]);
 
-  const signOut = () => {
+  const signOut = useCallback(async () => {
     localStorage.removeItem('token');
     setToken('');
     setUser(null);
-  };
+  },[]);
 
   return (
     <AuthContext.Provider

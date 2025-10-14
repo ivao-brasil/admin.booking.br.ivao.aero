@@ -2,7 +2,6 @@
   "name": "admin",
   "version": "0.1.0",
   "private": true,
-  "homepage": "",
   "dependencies": {
     "@emotion/react": "^11.7.0",
     "@emotion/styled": "^11.6.0",
@@ -12,18 +11,10 @@
     "@mui/lab": "^5.0.0-alpha.58",
     "@mui/material": "^5.2.2",
     "@mui/x-data-grid": "^5.2.1",
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
-    "@types/jest": "^26.0.15",
-    "@types/node": "^16.11.11",
-    "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0",
-    "axios": "^0.24.0",
+    "axios": "^1.12.2",
     "common": "*",
     "date-fns": "^2.28.0",
     "moment": "^2.29.1",
-    "prettier": "^2.5.1",
     "react": "^17.0.2",
     "react-data-table-component": "^7.4.6",
     "react-datetime": "^3.1.1",
@@ -31,17 +22,34 @@
     "react-hook-form": "^7.20.5",
     "react-query": "^3.34.6",
     "react-router-dom": "^6.0.2",
-    "react-scripts": "^5.0.0",
     "styled-components": "^5.3.3",
     "typescript": "^4.1.2",
     "web-vitals": "^1.0.1"
   },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "@types/axios": "^0.14.0",
+    "@types/jest": "^26.0.15",
+    "@types/moment": "^2.13.0",
+    "@types/node": "^16.11.11",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "concurrently": "^9.2.1",
+    "jsonwebtoken": "^9.0.2",
+    "nodemon": "^3.1.10",
+    "prettier": "^2.5.1",
+    "react-scripts": "^5.0.0",
+    "typescript": "^4.1.2"
+  },
   "scripts": {
     "start": "react-scripts start",
+    "start:local": "concurrently -k -n front,mock -c yellow,cyan \"set NODE_ENV=development&& npm start\" \"npm run start:mock\"",
+    "start:mock": "nodemon mock-server/server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "prettier": "prettier --write \"src/**/*.ts\" \"src/**/*.tsx\""
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -60,9 +68,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@types/axios": "^0.14.0",
-    "@types/moment": "^2.13.0"
   }
 }
