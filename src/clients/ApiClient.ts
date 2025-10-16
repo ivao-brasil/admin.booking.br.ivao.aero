@@ -4,6 +4,7 @@ import { Scenery } from '../types/Scenery';
 import { Slot } from '../types/Slot';
 import { User } from '../types/User';
 import AxiosHook from './AxiosHook';
+import { Env } from '../env';
 
 interface AuthResponse {
   jwt: string;
@@ -42,7 +43,10 @@ const fromObjectToQueryString = (obj: any) => {
 export class ApiClient extends AxiosHook {
 
   async auth(ivaoToken: string) {
-    const payload = { "ivao-token": ivaoToken }
+    const payload = {
+      "ivaoToken": ivaoToken,
+      "clientHost": Env.CLIENT_URL
+    }
     const { data } = await this.axios.post<AuthResponse>("/auth", payload)
     this.token = data.jwt;
     return data;
