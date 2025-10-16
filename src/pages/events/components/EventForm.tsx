@@ -120,7 +120,7 @@ export const EventForm: FunctionComponent<IEventFormProps> = ({ defaultState, on
           renderInput={(params: any) => <TextField {...params} />}
           label="Start date (your local time)"
           value={dateStart}
-          onChange={newValue => {
+          onChange={(newValue:any) => {
             if (newValue) {
               setValue('dateStart', newValue);
             }
@@ -132,7 +132,7 @@ export const EventForm: FunctionComponent<IEventFormProps> = ({ defaultState, on
           renderInput={(params: any) => <TextField {...params} />}
           label="End date (your local time)"
           value={dateEnd}
-          onChange={newValue => {
+          onChange={(newValue:any) => {
             if (newValue) {
               setValue('dateEnd', newValue);
             }
