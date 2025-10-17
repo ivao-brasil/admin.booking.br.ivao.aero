@@ -2,80 +2,171 @@ module.exports = {
   build: (app) => {
     app.get('/api/event', (req, res) => {
       res.send({
-        data: [
+        "data": [
           {
             "id": 1,
-            "division": "NU",
-            "dateStart": "2013-04-16T07:19:04+00:00",
-            "dateEnd": "2018-09-11T13:23:11+00:00",
-            "eventName": "Bulldozer Operator",
-            "privateSlots": 0,
-            "status": "created",
-            "createdBy": 1,
-            "description": "Animi voluptatem assumenda voluptatum quia sit dignissimos ipsa. Blanditiis et velit nostrum laborum quos libero enim aliquid. Sapiente molestias repellendus qui facere reprehenderit accusamus commodi. Assumenda officia cupiditate quia et.",
-            "banner": "https:\/\/wallpapercave.com\/wp\/wp4728116.jpg",
-            "atcBooking": "http:\/\/www.koelpin.com\/",
-            "atcBriefing": "http:\/\/www.mante.com\/saepe-molestiae-praesentium-quaerat-odio-veniam-perferendis-aspernatur",
-            "pilotBriefing": "http:\/\/www.conroy.com\/",
-            "public": true,
-            "created_at": "2022-01-01T17:18:51.000000Z",
-            "updated_at": "2022-01-01T17:18:51.000000Z"
+            "division": "BR",
+            "dateStart": "2027-06-30T23:01:02+00:00",
+            "dateEnd": "2027-07-01T02:00:00+00:00",
+            "eventName": "Teste",
+            "status": "scheduled",
+            "createdBy": 14,
+            "description": "https:\/\/admin.kronos.stage.br.ivao.aero\/events",
+            "banner": "https:\/\/cdn.discordapp.com\/attachments\/1090396815632892057\/1117175040589434910\/0pi8FTeVYuD9LNSmz.png",
+            "atcBooking": "https:\/\/cdn.discordapp.com\/attachments\/1090396815632892057\/1117175040589434910\/0pi8FTeVYuD9LNSmz.png",
+            "atcBriefing": "https:\/\/admin.kronos.stage.br.ivao.aero\/events",
+            "pilotBriefing": "https:\/\/admin.kronos.stage.br.ivao.aero\/events",
+            "public": 1,
+            "created_at": "2023-06-10T23:59:03.000000Z",
+            "updated_at": "2023-06-10T23:59:24.000000Z",
+            "type": "rfe",
+            "allowBookingAfterStart": 1,
+            "has_started": false,
+            "has_ended": false,
+            "can_confirm_slots": false,
+            "airports": [
+              {
+                "id": 25,
+                "eventId": 12,
+                "icao": "SBGR",
+                "created_at": "2023-06-10T23:59:24.000000Z",
+                "updated_at": "2023-06-10T23:59:24.000000Z",
+                "sceneries": []
+              }
+            ]
           },
           {
             "id": 2,
-            "division": "WS",
-            "dateStart": "2025-03-16T07:17:11+00:00",
-            "dateEnd": "2025-03-19T05:48:10+00:00",
-            "eventName": "Insulation Worker",
-            "privateSlots": 0,
-            "status": "scheduled",
-            "createdBy": 1,
-            "description": "Iste doloremque ab magni pariatur libero libero qui. Eum ipsum quo dolorem aliquid laborum enim maiores. Veritatis nulla assumenda soluta cupiditate. Ratione ut officia deserunt eius consequatur.",
-            "banner": "https:\/\/wallpapercave.com\/wp\/wp4728116.jpg",
-            "atcBooking": "https:\/\/www.prohaska.com\/dolorem-cum-harum-dolor-possimus-et-assumenda-qui",
-            "atcBriefing": "http:\/\/www.beatty.info\/esse-tenetur-non-qui-ea-vero-ut-error.html",
-            "pilotBriefing": "http:\/\/www.gorczany.net\/",
+            "division": "BR",
+            "dateStart": "2027-05-21T19:51:53+00:00",
+            "dateEnd": "2027-05-21T22:51:00+00:00",
+            "eventName": "TEste",
+            "status": "created",
+            "createdBy": 22,
+            "description": "https:\/\/discord.com\/ 212",
+            "banner": "https:\/\/images.unsplash.com\/photo-1503596476-1c12a8ba09a9?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=6000",
+            "atcBooking": "https:\/\/images.unsplash.com\/photo-1503596476-1c12a8ba09a9?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=6000",
+            "atcBriefing": "https:\/\/discord.com\/",
+            "pilotBriefing": "https:\/\/discord.com\/",
             "public": 1,
-            "created_at": "2022-01-01T17:18:52.000000Z",
-            "updated_at": "2022-01-01T17:18:52.000000Z"
+            "created_at": "2022-11-07T16:16:02.000000Z",
+            "updated_at": "2025-10-16T22:46:30.000000Z",
+            "type": "rfo",
+            "allowBookingAfterStart": 1,
+            "has_started": false,
+            "has_ended": false,
+            "can_confirm_slots": false,
+            "airports": [
+              {
+                "id": 27,
+                "eventId": 11,
+                "icao": "SBGR",
+                "created_at": "2025-10-16T22:46:30.000000Z",
+                "updated_at": "2025-10-16T22:46:30.000000Z",
+                "sceneries": []
+              }
+            ]
           },
           {
             "id": 3,
-            "division": "CK",
-            "dateStart": "1999-10-29T21:36:17+00:00",
-            "dateEnd": "1976-01-20T10:18:04+00:00",
-            "eventName": "Private Detective and Investigator",
-            "privateSlots": 1,
+            "division": "BR",
+            "dateStart": "2026-11-01T11:00:00+00:00",
+            "dateEnd": "2026-11-01T23:00:00+00:00",
+            "eventName": "Recife RFO",
             "status": "scheduled",
-            "createdBy": 1,
-            "description": "Perferendis velit dolores itaque perferendis qui magni. Natus saepe illo ipsam iure vero quas. Nobis qui consequatur id sequi voluptatem atque rerum. Assumenda ut veritatis laborum quia. Maiores neque accusamus dignissimos ut omnis laboriosam.",
-            "banner": "https:\/\/wallpapercave.com\/wp\/wp4728116.jpg",
-            "atcBooking": "http:\/\/www.waelchi.com\/recusandae-iusto-odit-earum-voluptatem-quod-eos",
-            "atcBriefing": "http:\/\/www.considine.com\/a-rem-modi-voluptatem-dolorum-fugiat",
-            "pilotBriefing": "https:\/\/kirlin.net\/consequatur-eveniet-dolorum-accusantium-fuga-et-et.html",
-            "public": 0,
-            "created_at": "2022-01-01T17:18:53.000000Z",
-            "updated_at": "2022-01-01T17:18:53.000000Z"
+            "createdBy": 12,
+            "description": "Welcome to the Recife Real Flight Operations.",
+            "banner": "https:\/\/live.staticflickr.com\/65535\/52370625798_b691182db4_o.png",
+            "atcBooking": "https:\/\/tools.ivao.aero\/event\/BR\/book\/2538",
+            "atcBriefing": "https:\/\/google.com\/",
+            "pilotBriefing": "https:\/\/drive.google.com\/file\/d\/1bYN44R-8aFdOwJIIh9bvMsrDfp0QCwhE\/view?usp=sharing",
+            "public": 1,
+            "created_at": "2022-09-29T21:30:28.000000Z",
+            "updated_at": "2022-10-04T01:00:10.000000Z",
+            "type": "rfo",
+            "allowBookingAfterStart": 1,
+            "has_started": false,
+            "has_ended": false,
+            "can_confirm_slots": false,
+            "airports": [
+              {
+                "id": 20,
+                "eventId": 10,
+                "icao": "SBRF",
+                "created_at": "2022-10-04T01:00:10.000000Z",
+                "updated_at": "2022-10-04T01:00:10.000000Z",
+                "sceneries": []
+              }
+            ]
           },
           {
             "id": 4,
-            "division": "MM",
-            "dateStart": "1980-02-14T01:38:41+00:00",
-            "dateEnd": "2005-09-02T17:37:30+00:00",
-            "eventName": "Agricultural Sciences Teacher",
-            "privateSlots": 0,
+            "division": "BR",
+            "dateStart": "2026-06-04T23:20:00+00:00",
+            "dateEnd": "2026-06-05T00:19:00+00:00",
+            "eventName": "ABER",
             "status": "created",
-            "createdBy": 1,
-            "description": "Unde ea dolores non nam. Explicabo quaerat et iste. Ipsa ratione aut eum ex vel. Dolor aut totam sit optio. Debitis qui fugiat dolore voluptatem sit ut.",
-            "banner": "https:\/\/wallpapercave.com\/wp\/wp4728116.jpg",
-            "atcBooking": "http:\/\/www.strosin.biz\/repudiandae-dolorem-suscipit-omnis-ut-fugit-sint-sint.html",
-            "atcBriefing": "http:\/\/langworth.com\/consectetur-at-atque-et-repudiandae",
-            "pilotBriefing": "http:\/\/www.stoltenberg.info\/ratione-quo-fugit-perferendis-id-harum-doloribus",
+            "createdBy": 14,
+            "description": "as",
+            "banner": "https:\/\/i.imgur.com\/BxOCgtz.jpeg",
+            "atcBooking": "https:\/\/i.imgur.com\/BxOCgtz.jpeg",
+            "atcBriefing": "https:\/\/kronos.br.ivao.aero\/events",
+            "pilotBriefing": "https:\/\/kronos.br.ivao.aero\/events",
             "public": 1,
-            "created_at": "2022-01-01T17:18:54.000000Z",
-            "updated_at": "2022-01-01T17:18:54.000000Z"
+            "created_at": "2022-06-04T23:19:42.000000Z",
+            "updated_at": "2022-06-04T23:19:42.000000Z",
+            "type": "rfe",
+            "allowBookingAfterStart": 1,
+            "has_started": false,
+            "has_ended": false,
+            "can_confirm_slots": false,
+            "airports": [
+              {
+                "id": 11,
+                "eventId": 9,
+                "icao": "SBGR",
+                "created_at": "2022-06-04T23:19:42.000000Z",
+                "updated_at": "2022-06-04T23:19:42.000000Z",
+                "sceneries": []
+              }
+            ]
+          },
+          {
+            "id": 5,
+            "division": "BR",
+            "dateStart": "2026-06-06T23:17:53+00:00",
+            "dateEnd": "2026-06-07T02:00:00+00:00",
+            "eventName": "WMA",
+            "status": "created",
+            "createdBy": 14,
+            "description": "as",
+            "banner": "https:\/\/i.imgur.com\/BxOCgtz.jpeg",
+            "atcBooking": "https:\/\/kronos.br.ivao.aero\/events",
+            "atcBriefing": "https:\/\/kronos.br.ivao.aero\/events",
+            "pilotBriefing": "https:\/\/kronos.br.ivao.aero\/events",
+            "public": 1,
+            "created_at": "2022-06-04T23:18:49.000000Z",
+            "updated_at": "2022-06-04T23:18:49.000000Z",
+            "type": "rfe",
+            "allowBookingAfterStart": 1,
+            "has_started": false,
+            "has_ended": false,
+            "can_confirm_slots": false,
+            "airports": [
+              {
+                "id": 10,
+                "eventId": 8,
+                "icao": "SBGR",
+                "created_at": "2022-06-04T23:18:49.000000Z",
+                "updated_at": "2022-06-04T23:18:49.000000Z",
+                "sceneries": []
+              }
+            ]
           }
-        ]
+        ],
+        "page": 1,
+        "perPage": 5,
+        "total": 10
       });
     });
 
