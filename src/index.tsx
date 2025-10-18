@@ -10,8 +10,8 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ONE_HOUR } from './constants';
 import { Env } from './env';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import { LocalizationProvider } from '@mui/lab';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
 const queryClient = new QueryClient({
   defaultOptions: {

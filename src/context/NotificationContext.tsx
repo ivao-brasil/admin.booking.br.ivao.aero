@@ -1,4 +1,4 @@
-import { Alert, AlertColor, AlertTitle, Snackbar } from '@material-ui/core';
+import { Alert, AlertColor, AlertTitle, Snackbar } from '@mui/material';
 import { createContext, FunctionComponent, useState } from 'react';
 
 export enum NotificationType {

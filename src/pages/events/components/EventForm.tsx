@@ -1,5 +1,5 @@
-import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
-import { DateTimePicker } from '@mui/lab';
+import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import { DateTimePicker } from '@mui/x-date-pickers';
 import { FunctionComponent, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation, useQueryClient } from 'react-query';
@@ -117,7 +117,6 @@ export const EventForm: FunctionComponent<IEventFormProps> = ({ defaultState, on
         onSubmit={handleSubmit(onSubmit)}>
         <TextField label="Event Name" {...register('eventName', { required: true })} />
         <DateTimePicker
-          renderInput={(params: any) => <TextField {...params} />}
           label="Start date (your local time)"
           value={dateStart}
           onChange={(newValue: Date | null) => {
@@ -127,9 +126,14 @@ export const EventForm: FunctionComponent<IEventFormProps> = ({ defaultState, on
           }}
           minDateTime={new Date()}
           ampm={false}
+          slotProps={{
+            textField: {
+              color: 'primary',
+              disabled: true
+            },
+          }}
         />
         <DateTimePicker
-          renderInput={(params: any) => <TextField {...params} />}
           label="End date (your local time)"
           value={dateEnd}
           onChange={(newValue: Date | null) => {
@@ -139,6 +143,12 @@ export const EventForm: FunctionComponent<IEventFormProps> = ({ defaultState, on
           }}
           minDateTime={new Date()}
           ampm={false}
+          slotProps={{
+            textField: {
+              color: 'primary',
+              disabled: true
+            },
+          }}
         />
         <TextField label="Pilot Briefing" {...register('pilotBriefing', { required: true })} />
         <TextField label="ATC Briefing" {...register('atcBriefing', { required: true })} />
