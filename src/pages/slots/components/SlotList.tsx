@@ -64,7 +64,7 @@ export const SlotList: FunctionComponent<SlotListProp> = ({ onEdit }) => {
         }
 
         return (
-          <img alt="airline logo" src={`${Env.API_HOST}/logo/airline/${data.row.flightNumber.substring(0, 3)}`} />
+          <img alt="airline logo" src={`${Env.IVAO_KRONOS_API_SERVER}/logo/airline/${data.row.flightNumber.substring(0, 3)}`} />
         );
       },
       filterable: true,
