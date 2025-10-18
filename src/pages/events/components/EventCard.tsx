@@ -1,5 +1,5 @@
 import { Card, CardActions, CardContent, CardHeader, CardMedia, Collapse, IconButton, IconButtonProps, styled, Tooltip, Typography } from '@material-ui/core';
-import { Delete, Edit, EventNote, ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
+import { Delete, Edit, EventNote, ExpandMore as ExpandMoreIcon } from '@mui/icons-material';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import { FunctionComponent, useState } from 'react';
 import { Event } from '../../../types/Event';
