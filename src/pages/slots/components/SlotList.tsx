@@ -1,4 +1,4 @@
-import { Delete, Edit, FlightLand, FlightTakeoff, People, Public } from '@material-ui/icons';
+import { Delete, Edit, FlightLand, FlightTakeoff, People, Public } from '@mui/icons-material';
 import { PrivacyTip } from '@mui/icons-material';
 import { Button, Grid, Tooltip } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';

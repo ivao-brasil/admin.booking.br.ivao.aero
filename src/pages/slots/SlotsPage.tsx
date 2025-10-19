@@ -7,7 +7,7 @@ import { SlotForm } from './components/SlotForm';
 import { SlotList } from './components/SlotList';
 import { Slot } from '../../types/Slot';
 import { Button, CircularProgress } from '@mui/material';
-import { CloudUpload } from '@material-ui/icons';
+import { CloudUpload } from '@mui/icons-material';
 import { Download } from '@mui/icons-material';
 import { AuthContext } from '../../context/AuthContext';
 import { IocContext } from '../../context/IocContext';

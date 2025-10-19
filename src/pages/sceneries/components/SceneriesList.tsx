@@ -1,5 +1,5 @@
 import { Button, Grid } from '@material-ui/core';
-import { Delete, Edit } from '@material-ui/icons';
+import { Delete, Edit } from '@mui/icons-material';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { FunctionComponent, useContext, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';

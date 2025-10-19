@@ -4,9 +4,14 @@ import ReactDOM from 'react-dom';
 import { App } from './App';
 import { AuthProvider } from './context/AuthContext';
 import { IocProvider } from './context/IocContext';
+import { NotificationProvider } from './context/NotificationContext';
 import { theme } from './theme';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ONE_HOUR } from './constants';
+import { Env } from './env';
+import { ReactQueryDevtools } from 'react-query/devtools';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,7 +27,12 @@ ReactDOM.render(
       <IocProvider>
         <AuthProvider>
           <ThemeProvider theme={theme}>
-            <App />
+            <NotificationProvider>
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                {Env.DEV && <ReactQueryDevtools initialIsOpen={false} />}
+                <App />
+              </LocalizationProvider>
+            </NotificationProvider>
           </ThemeProvider>
         </AuthProvider>
       </IocProvider>
