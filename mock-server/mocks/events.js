@@ -1,7 +1,7 @@
 module.exports = {
   build: (app) => {
     app.get('/api/event', (req, res) => {
-      res.send({
+      res.json({
         "data": [
           {
             "id": 1,
@@ -171,7 +171,7 @@ module.exports = {
     });
 
     app.get('/api/event/2', (req, res) => {
-      res.send({
+      res.json({
         "id": 2,
         "division": "BR",
         "dateStart": "2026-04-13T19:00:40+00:00",

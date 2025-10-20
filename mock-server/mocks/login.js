@@ -1,9 +1,10 @@
 const jwt = require('jsonwebtoken');
+const path = require('path');
 
 module.exports = {
     build: (app) => {
         app.get('/authorize', (req, res) => {
-            res.sendfile('mock-server/mocks/login.html');
+          res.sendFile(path.join(__dirname, 'login.html'));
         });
 
         app.get('/complete-login', (req, res) => {
@@ -32,7 +33,7 @@ module.exports = {
         });
 
       app.get('/api/auth', (req, res) => {
-        res.send({
+        res.json({
           "id": 1234,
           "vid": "123456",
           "firstName": "FirstName",

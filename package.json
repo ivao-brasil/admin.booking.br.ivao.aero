@@ -26,7 +26,6 @@
     "web-vitals": "^1.0.1"
   },
   "devDependencies": {
-    "@craco/craco": "^7.1.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -36,21 +35,21 @@
     "@types/node": "^16.11.11",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "@vitejs/plugin-react": "^5.0.4",
     "concurrently": "^9.2.1",
+    "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "nodemon": "^3.1.10",
     "prettier": "^2.5.1",
     "react-scripts": "^5.0.0",
-    "typescript": "^4.1.2"
+    "typescript": "^4.1.2",
+    "vite": "^7.1.11"
   },
   "scripts": {
-    "start": "craco start",
-    "start:local": "concurrently -k -n front,mock -c yellow,cyan \"set NODE_ENV=development&& npm start\" \"npm run start:mock\"",
+    "start": "vite",
+    "start:local": "concurrently -k -n front,mock -c yellow,cyan \"NODE_ENV=development npm start\" \"npm run start:mock\"",
     "start:mock": "nodemon mock-server/server.js",
-    "build": "craco build",
-    "test": "craco test",
-    "eject": "react-scripts eject",
-    "prettier": "prettier --write \"src/**/*.ts\" \"src/**/*.tsx\""
+    "build": "vite build"
   },
   "eslintConfig": {
     "extends": [

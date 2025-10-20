@@ -1,7 +1,7 @@
 module.exports = {
   build: (app) => {
     app.get('/api/airport/details/:icao', (req, res) => {
-      res.send({
+      res.json({
         "icao": req.params.icao,
         "iata": req.params.icao.substring(1),
         "faaCode": req.params.icao.substring(1),
