@@ -1,39 +1,40 @@
 import { useContext, useEffect } from 'react';
-import { BrowserRouter, Route, Routes, useNavigate, useSearchParams } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useLocation, useSearchParams } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import { Env } from '../env';
 
 export const RedirectToLogin = () => {
   const [urlParams] = useSearchParams();
-  const IVAOTOKEN = urlParams.get("IVAOTOKEN");
+  const ivaoAuthCode = urlParams.get("code");
 
-  const { signIn, user } = useContext(AuthContext);
-  const navigate = useNavigate();
+  const { signIn, token, openIdInfo } = useContext(AuthContext);
+  const location = useLocation();
 
   useEffect(() => {
-    if (user) {
-      window.location.href = '/';
-    }
-
-    const redirect = urlParams.get("redirect");
-    if (redirect && redirect.indexOf("IVAOTOKEN") !== -1) {
-        /*
-            Se o servidor estiver rodando em localhost:3000, o site de login da IVAO irá redirecionar com uma query inválida
-            Ex: new URLSearchParams(window.location.search).get("redirect") = /?IVAOTOKEN=error
-        */
-        throw new Error(`The IVAO Login service rejected the request. The server is in ivao.aero domain? Token query: ${redirect}`);
-    }
-
-    if (!IVAOTOKEN) {
-      const ivaoLoginUrl = 'https://login.ivao.aero/index.php?url={url}';
-      const baseUrl = window.location.href;
-      window.location.href = ivaoLoginUrl.replace('{url}', `${baseUrl}?redirect=${window.location.pathname}`);
+    if (!openIdInfo || !openIdInfo.authorizationEndpoint) {
       return;
     }
 
-    signIn(IVAOTOKEN).then(() => {
-      navigate(redirect || '');
-    });
-  }, [IVAOTOKEN, signIn, navigate, user, urlParams]);
+    if (token) {
+      return;
+    }
+
+    if (ivaoAuthCode) {
+      signIn(ivaoAuthCode);
+      return;
+    }
+
+    const urlQueryParams = new URLSearchParams();
+    urlQueryParams.set("client_id", Env.CLIENT_ID);
+    urlQueryParams.set(
+      "redirect_uri",
+      encodeURI(`${window.location.href}`));
+    urlQueryParams.set("response_type", "code");
+    urlQueryParams.set("scope", "profile");
+    urlQueryParams.set("response_mode", "query");
+
+    window.location.href = `${openIdInfo.authorizationEndpoint}?${urlQueryParams.toString()}`;
+  }, [signIn, token, location.state, openIdInfo, ivaoAuthCode]);
 
   return <>Loading...</>;
 };

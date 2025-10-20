@@ -7,14 +7,14 @@ interface IIocContext {
 }
 
 export const IocContext = createContext<IIocContext>({
-  apiClient: new ApiClient(String(Env.API_HOST)),
+  apiClient: new ApiClient(String(Env.IVAO_KRONOS_API_SERVER)),
 });
 
 export const IocProvider: FunctionComponent = ({ children }) => {
-  const [apiClient, setApiClient] = useState(new ApiClient(String(Env.API_HOST)));
+  const [apiClient, setApiClient] = useState(new ApiClient(String(Env.IVAO_KRONOS_API_SERVER)));
 
   useEffect(() => {
-    setApiClient(new ApiClient(String(Env.API_HOST)));
+    setApiClient(new ApiClient(String(Env.IVAO_KRONOS_API_SERVER)));
   }, []);
 
   return <IocContext.Provider value={{ apiClient }}>{children}</IocContext.Provider>;

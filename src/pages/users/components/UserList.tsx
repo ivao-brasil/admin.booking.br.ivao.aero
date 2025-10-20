@@ -1,5 +1,5 @@
 import { Button, Tooltip } from '@material-ui/core';
-import { RemoveCircle, SupervisorAccount } from '@material-ui/icons';
+import { RemoveCircle, SupervisorAccount } from '@mui/icons-material';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../../context/AuthContext';
 import { IocContext } from '../../../context/IocContext';

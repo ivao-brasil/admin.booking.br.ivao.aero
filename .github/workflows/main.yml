@@ -8,11 +8,12 @@ name: 🚀 Deploy to Production
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment: Production
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
       with:
-        node-version: '14.x'
+        node-version: '20.19.5'
         cache: 'yarn'
 
     - name: Install dependencies
@@ -22,16 +23,31 @@ jobs:
       env:
         CI: false
         GENERATE_SOURCEMAP: false
-        REACT_APP_MAIN_SYSTEM_URL: ${{ secrets.PRODUCTION_REACT_APP_MAIN_SYSTEM_URL }}
-        REACT_APP_API_HOST: ${{ secrets.PRODUCTION_REACT_APP_API_HOST }}
-        REACT_APP_LOGO_URL: ${{ secrets.PRODUCTION_REACT_APP_LOGO_URL }}
+        VITE_IVAO_KRONOS_API_HOST: ${{ secrets.VITE_IVAO_KRONOS_API_HOST }}
+        VITE_IVAO_API_HOST: ${{ secrets.VITE_IVAO_API_HOST }}
+        VITE_CLIENT_ID: ${{ secrets.VITE_CLIENT_ID }}
+        VITE_LOGO_URL: ${{ secrets.VITE_LOGO_URL }}
+        VITE_ANALYTICS_TRACKING_ID: ${{ secrets.VITE_ANALYTICS_TRACKING_ID }}
+        VITE_OGO_SIDEBAR_LIGHT: ${{ secrets.VITE_OGO_SIDEBAR_LIGHT }}
+        VITE_LOGO_SIDEBAR_DARK: ${{ secrets.VITE_LOGO_SIDEBAR_DARK }}
+        VITE_CLIENT_URL: ${{ vars.VITE_CLIENT_URL }}
+
       run: yarn build
 
     - name: 📂 Sync files
-      uses: SamKirkland/FTP-Deploy-Action@4.1.0
+      if: ${{ vars.IS_DEPLOYMENT_ENABLED == 'true' }}
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
-        server: ${{ secrets.PRODUCTION_FTP_HOST }}
-        username: ${{ secrets.PRODUCTION_FTP_USERNAME }}
-        password: ${{ secrets.PRODUCTION_FTP_PASSWORD }}
-        local-dir: build/
-        server-dir: /
+        server: ${{ secrets.FTP_HOST }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: dist/
+        server-dir: ${{ secrets.SERVER_DIR }}
+        exclude: |
+          .git*
+          .github
+          node_modules
+          .DS_Store
+          .vscode
+          .idea
+          mock-server

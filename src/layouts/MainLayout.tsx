@@ -1,5 +1,5 @@
 import { AppBar, Box, Container, CssBaseline, IconButton, Toolbar, Typography } from '@material-ui/core';
-import { Menu } from '@material-ui/icons';
+import { Menu } from '@mui/icons-material';
 import { useTheme } from '@mui/material';
 import { FunctionComponent, useState } from 'react';
 import { Drawer } from '../components/Drawer';
