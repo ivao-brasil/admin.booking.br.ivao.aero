@@ -229,6 +229,7 @@ export const SlotList: FunctionComponent<SlotListProp> = ({ onEdit }) => {
           text={`Please confirm if you want do delete slot ${deletingSlot.origin} - ${deletingSlot.destination}?`}
           onConfirm={result => {
             setDeletingSlot(null);
+            handleMenuClose();
 
             if (result) {
               deleteSlot.mutate(deletingSlot);
@@ -242,6 +243,7 @@ export const SlotList: FunctionComponent<SlotListProp> = ({ onEdit }) => {
           text={`Please confirm if you want do cancel the booking for slot ${cancellingBooking.origin} - ${cancellingBooking.destination}?`}
           onConfirm={result => {
             setCancellingBooking(null);
+            handleMenuClose();
 
             if (result) {
               cancelBooking.mutate(cancellingBooking);
