@@ -1,7 +1,7 @@
 module.exports = {
   build: (app) => {
     app.get('/api/event/2/slot/count', (req, res) => {
-      res.json({"departure": 0, "landing": 0, "departureLanding": 26});
+      res.json({"departure":8,"landing":8,"departureLanding":175});
     });
     app.get('/api/event/2/slot', (req, res) => {
       res.json({

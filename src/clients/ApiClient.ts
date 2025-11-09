@@ -135,6 +135,14 @@ export class ApiClient extends AxiosHook {
     return response.data;
   }
 
+  async removeBooking(slotId: number, token: string) {
+    const response = await this.axios
+      .patch(`/slot/${slotId}/cancel`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+    return response.data;
+  }
+
   async deleteSlot(id: number, token: string) {
     const response = await this.axios
       .delete(`/slot/${id}`, {
