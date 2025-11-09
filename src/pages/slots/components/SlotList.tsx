@@ -1,7 +1,7 @@
-import { Delete, Edit, FlightLand, FlightTakeoff, People, Public } from '@mui/icons-material';
+import { FlightLand, FlightTakeoff, People, Public } from '@mui/icons-material';
 import { PrivacyTip } from '@mui/icons-material';
-import { Button, Grid, Tooltip } from '@mui/material';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { Button, Grid, Menu, MenuItem, Tooltip } from '@mui/material';
+import { DataGrid, GridColDef, GridMoreVertIcon } from '@mui/x-data-grid';
 import { FunctionComponent, useContext, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
@@ -12,6 +12,7 @@ import { NotificationContext, NotificationType } from '../../../context/Notifica
 import { Env } from '../../../env';
 import { useSlots } from '../../../hooks/useSlots';
 import { Slot } from '../../../types/Slot';
+import { IconButton } from '@material-ui/core';
 
 interface SlotListProp {
   onEdit: (slot: Slot) => void;
@@ -25,12 +26,26 @@ export const SlotList: FunctionComponent<SlotListProp> = ({ onEdit }) => {
   const { dispatch } = useContext(NotificationContext);
 
   const [deletingSlot, setDeletingSlot] = useState<Slot>();
+  const [cancellingBooking, setCancellingBooking] = useState<Slot>();
   const [page, setPage] = useState(0);
   const [perPage, setPerPage] = useState(25);
+
+  const [menuAnchorEl, setMenuAnchorEl] = useState<null | HTMLElement>(null);
+  const [selectedRow, setSelectedRow] = useState<Slot | null>(null);
 
   const queryClient = useQueryClient();
 
   const { slots, count, slotsLoading } = useSlots(eventId, page + 1, perPage);
+
+  const handleMenuOpen = (event: any, row: any) => {
+    setMenuAnchorEl(event.currentTarget);
+    setSelectedRow(row);
+  };
+
+  const handleMenuClose = () => {
+    setMenuAnchorEl(null);
+    setSelectedRow(null);
+  };
 
   const deleteSlot = useMutation((slot: Slot) => apiClient.deleteSlot(slot.id, token), {
     onSuccess: () => {
@@ -40,6 +55,17 @@ export const SlotList: FunctionComponent<SlotListProp> = ({ onEdit }) => {
     },
     onError: () => {
       dispatch('Error to exclude slot', 'Slot exclusion', NotificationType.ERROR, 5000);
+    },
+  });
+
+  const cancelBooking = useMutation((slot: Slot) => apiClient.removeBooking(slot.id, token), {
+    onSuccess: () => {
+      setCancellingBooking(undefined);
+      queryClient.invalidateQueries(['slots', eventId]);
+      dispatch('Booking successfully cancelled', 'Booking cancelling', NotificationType.SUCCESS, 5000);
+    },
+    onError: () => {
+      dispatch('Error to delete booking', 'Booking cancelling', NotificationType.ERROR, 5000);
     },
   });
 
@@ -155,21 +181,19 @@ export const SlotList: FunctionComponent<SlotListProp> = ({ onEdit }) => {
       renderCell: data => (
         <Grid container spacing={2}>
           <Grid item>
-            <Button variant="outlined" color="info" startIcon={<Edit />} onClick={() => onEdit(data.row)}>
-              Edit
-            </Button>
-          </Grid>
-
-          <Grid item>
-            <Button variant="outlined" color="error" startIcon={<Delete />} onClick={() => setDeletingSlot(data.row)}>
-              Delete
-            </Button>
+            <IconButton
+              size="small"
+              onClick={(event) => handleMenuOpen(event, data.row)}
+            >
+              <GridMoreVertIcon />
+            </IconButton>
           </Grid>
         </Grid>
       ),
     },
   ];
 
+  // @ts-ignore
   return (
     <>
       <DataGrid
@@ -190,14 +214,39 @@ export const SlotList: FunctionComponent<SlotListProp> = ({ onEdit }) => {
         filterMode="client"
       />
 
+      <Menu
+        anchorEl={menuAnchorEl}
+        open={menuAnchorEl !== null}
+        onClose={handleMenuClose}
+      >
+        {selectedRow?.owner && (<MenuItem onClick={() => setCancellingBooking(selectedRow)}>Cancel Booking</MenuItem>)}
+        <MenuItem onClick={() => onEdit(selectedRow!)}>Edit</MenuItem>
+        <MenuItem onClick={() => setDeletingSlot(selectedRow!)}>Delete</MenuItem>
+      </Menu>
+
       {deletingSlot && (
         <Confirm
           text={`Please confirm if you want do delete slot ${deletingSlot.origin} - ${deletingSlot.destination}?`}
           onConfirm={result => {
-            setDeletingSlot(undefined);
+            setDeletingSlot(null);
+            handleMenuClose();
 
             if (result) {
               deleteSlot.mutate(deletingSlot);
+            }
+          }}
+        />
+      )}
+
+      {cancellingBooking && (
+        <Confirm
+          text={`Please confirm if you want do cancel the booking for slot ${cancellingBooking.origin} - ${cancellingBooking.destination}?`}
+          onConfirm={result => {
+            setCancellingBooking(null);
+            handleMenuClose();
+
+            if (result) {
+              cancelBooking.mutate(cancellingBooking);
             }
           }}
         />
